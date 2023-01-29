@@ -19,8 +19,8 @@ if __name__ == "__main__":
         ,coordinates=(31.457407498909543, 121.80406508534779))
     dc2=distribution_center(name='China Railway Logistics Z7haoqing Distribution Center'
         , coordinates=(23.134548374827574, 112.4058499170713))
-    dc3 = distribution_center(name='Taotaole South China Distrib Ctr'
-        , coordinates=(23.392681976113746, 113.22044147365186))
+    dc3 = distribution_center(name='China Distribution and Logistics Co Ltd'
+        , coordinates=(22.303953718116837, 114.1744830987732))
     with open("asia_coordinates.csv") as file:
         rows=csv.reader(file)
         next(rows,None)

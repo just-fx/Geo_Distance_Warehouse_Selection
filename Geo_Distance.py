@@ -1,39 +1,46 @@
 import geopy.distance
 import csv
+import json
 
-#Define class
+
+# Define class
 class distribution_center:
     def __init__(self, name, coordinates):
-        self.name=name
-        self.coordinates=coordinates
-        self.distances=[]
-    #get distance from user coordinates
+        self.name = name
+        self.coordinates = (coordinates[0], coordinates[1])
+        self.distances = []
+
+    # get distance from user coordinates
     def compute_distance(self, user_coordinates):
         distance = geopy.distance.geodesic(user_coordinates, self.coordinates).km
         self.distances.append(distance)
-    #get mean distance
+
+    # get mean distance
     def mean_distance(self):
-        mean = sum(self.distances)/len(self.distances)
-        print('Average distance from {}: {:,.2f} km'.format(self.name, mean))
+        mean = sum(self.distances) / len(self.distances)
+        print("Average distance from {}: {:,.2f} km".format(self.name, mean))
         return mean
 
-#Instantiate classes and return mean distance from users
+
+# Instantiate classes and return mean distance from users
 def get_mean_distance(name, coordinates, filename):
-    dc=distribution_center(name,coordinates)
+    dc = distribution_center(name, coordinates)
     with open(filename) as file:
-        rows=csv.reader(file)
-        next(rows,None)
+        rows = csv.reader(file)
+        next(rows, None)
         for row in rows:
-            country,user_coordinates = row[0],(float(row[1]),float(row[2]))
+            country, user_coordinates = row[0], (float(row[1]), float(row[2]))
             dc.compute_distance(user_coordinates)
     return dc.mean_distance()
 
-#Run main program
+
+# Run main program
 if __name__ == "__main__":
-    file = 'asia_coordinates.csv'
-    mean_distance1=get_mean_distance(name='China Distribution Center Co. Ltd.'
-        ,coordinates=(31.457407498909543, 121.80406508534779),filename=file)
-    mean_distance2=get_mean_distance(name='China Railway Logistics Z7haoqing Distribution Center'
-        , coordinates=(23.134548374827574, 112.4058499170713),filename=file)
-    mean_distance3 = get_mean_distance(name='China Distribution and Logistics Co Ltd'
-        , coordinates=(22.303953718116837, 114.1744830987732),filename=file)
+    with open("distribution_centers.json", "r") as file:
+        file = json.load(file)
+        for dist_center in file["distribution_centers"]:
+            mean_distance = get_mean_distance(
+                name=dist_center["name"],
+                coordinates=dist_center["coordinates"],
+                filename=file["customer_coordinates_file"],
+            )

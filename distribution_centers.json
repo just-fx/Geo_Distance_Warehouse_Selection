@@ -1,0 +1,26 @@
+{
+    "customer_coordinates_file": "asia_coordinates.csv",
+    "distribution_centers": [
+        {
+            "name": "China Distribution Center Co. Ltd.",
+            "coordinates": [
+                31.457407498909543,
+                121.80406508534779
+            ]
+        },
+        {
+            "name": "China Railway Logistics Z7haoqing Distribution Center",
+            "coordinates": [
+                23.134548374827574,
+                112.4058499170713
+            ]
+        },
+        {
+            "name": "China Distribution and Logistics Co Ltd",
+            "coordinates": [
+                22.303953718116837,
+                114.1744830987732
+            ]
+        }
+    ]
+}

@@ -1,12 +1,13 @@
 import geopy.distance
 import csv
+import json
 
 
 # Define class
 class distribution_center:
     def __init__(self, name, coordinates):
         self.name = name
-        self.coordinates = coordinates
+        self.coordinates = (coordinates[0], coordinates[1])
         self.distances = []
 
     # get distance from user coordinates
@@ -35,19 +36,11 @@ def get_mean_distance(name, coordinates, filename):
 
 # Run main program
 if __name__ == "__main__":
-    file = "asia_coordinates.csv"
-    mean_distance1 = get_mean_distance(
-        name="China Distribution Center Co. Ltd.",
-        coordinates=(31.457407498909543, 121.80406508534779),
-        filename=file,
-    )
-    mean_distance2 = get_mean_distance(
-        name="China Railway Logistics Z7haoqing Distribution Center",
-        coordinates=(23.134548374827574, 112.4058499170713),
-        filename=file,
-    )
-    mean_distance3 = get_mean_distance(
-        name="China Distribution and Logistics Co Ltd",
-        coordinates=(22.303953718116837, 114.1744830987732),
-        filename=file,
-    )
+    with open("distribution_centers.json", "r") as file:
+        file = json.load(file)
+        for dist_center in file["distribution_centers"]:
+            mean_distance = get_mean_distance(
+                name=dist_center["name"],
+                coordinates=dist_center["coordinates"],
+                filename=file["customer_coordinates_file"],
+            )
